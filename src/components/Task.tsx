@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
 import './Task.css'
-import { ITask } from './TasksList'
 
+interface Prop {
+  value: string,
+  id: string,
+  deleteTask : (id:string) => void
+}
 
-function Task(props: ITask) {
+function Task(props: Prop) {
 
     const [isChecked, setIsChecked] = useState(false)
 
@@ -13,8 +17,9 @@ function Task(props: ITask) {
 
   return (
     <div>
-    <button onClick={handleCheck}>click</button>
-    {isChecked ? <p><s>{props.value}</s></p> : <p>{props.value}</p>}
+      <button onClick={() => {props.deleteTask(props.id)}}>delete</button>
+      <button onClick={handleCheck}>click</button>
+      {isChecked ? <p><s>{props.value}</s></p> : <p>{props.value}</p>}
     </div>
   )
 }

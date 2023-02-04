@@ -1,31 +1,37 @@
 import React, { useState} from 'react'
 import Task from './Task'
+import { v4 as uuid } from 'uuid';
 
-export interface ITask {
-  value: string
+interface Test {
+  value: string,
+  id: string,
 }
 
 function TasksList() {
   const [taskValue, setTaskValue] = useState('')
-  const [taskList, setTaskList] = useState<ITask[]>([])
-
-  const handleChange = (e) => {
-    setTaskValue(e.target.value)
-  }
+  const [taskList, setTaskList] = useState<Test[]>([])
 
   const createTask = () => {
     if(!taskValue) return
 
-    setTaskList([...taskList, {value: taskValue}])
+    const newTask = {value: taskValue, id: uuid()}
+    setTaskList([...taskList, newTask])
     setTaskValue("")
+  }
+
+  const deleteTask = (id) => {
+    const afterDeleteTaskList = taskList.filter((e) => {return e.id !== id})
+    setTaskList(afterDeleteTaskList)
   }
 
   return (
     <div>
-        <input onChange={handleChange} value={taskValue}></input>
+        <input onChange={(e) => {setTaskValue(e.target.value)}} value={taskValue}></input>
         <button onClick={createTask}>create Task</button>
-        {taskList && taskList.map((task, key )=>{
-          return <Task key={key} value = {task.value}/>
+        <h1>There are {taskList.length} todos</h1>
+        {taskList.map((task)=>{
+          return (
+          <Task key={task.id} id={task.id} value = {task.value} deleteTask={deleteTask} />)
         })}
     </div>
   )
