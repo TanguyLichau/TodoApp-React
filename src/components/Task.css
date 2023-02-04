@@ -1,0 +1,11 @@
+div {
+    text-align: center;
+}
+
+button, p {
+    display:inline-block
+}
+
+button {
+    margin-right: 10px;
+}
