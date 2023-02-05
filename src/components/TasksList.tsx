@@ -24,6 +24,16 @@ function TasksList() {
     setTaskList(afterDeleteTaskList)
   }
 
+  const modifyTask = (id, modifiedValue) => {
+    const afterModifyTaskList = taskList.map(e => {
+      if (e.id === id) {
+        return { ...e, value: modifiedValue };
+      }
+      return e;
+    });
+    setTaskList(afterModifyTaskList);
+  };
+
   return (
     <div>
         <input onChange={(e) => {setTaskValue(e.target.value)}} value={taskValue}></input>
@@ -31,7 +41,7 @@ function TasksList() {
         <h1>There are {taskList.length} todos</h1>
         {taskList.map((task)=>{
           return (
-          <Task key={task.id} id={task.id} value = {task.value} deleteTask={deleteTask} />)
+          <Task key={task.id} id={task.id} value = {task.value} deleteTask={deleteTask} modifyTask={modifyTask}/>)
         })}
     </div>
   )
